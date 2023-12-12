@@ -1,20 +1,14 @@
 #!/usr/bin/python3
-"""Defines the State class."""
+"""Module for the State class."""
 from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """Represent a state."""
+    """A class that represents a state.
 
-    def __init__(self, name=""):
-        """Initialize State instance.
+    Attributes:
+        name (str): The name of the state.
+    """
 
-        Args:
-            name (str): The name of the state.
-        """
-        super().__init__()
-        self.name = name
-
-    def __str__(self):
-        """Return a string representation of the State instance."""
-        return f"State({self.name})"
+    # Initialize an empty string for the state name
+    name = ""

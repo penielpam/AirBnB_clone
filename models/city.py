@@ -1,23 +1,18 @@
 #!/usr/bin/python3
 """Defines the City class."""
-
 from models.base_model import BaseModel
 
 
 class City(BaseModel):
-    """Represent a city."""
+    """Represent a city.
 
-    def __init__(self, state_id="", name=""):
-        """Initialize City instance.
+    Attributes:
+        state_id (str): The state id.
+        name (str): The name of the city.
+    """
 
-        Args:
-            state_id (str): The state id.
-            name (str): The name of the city.
-        """
-        super().__init__()
-        self.state_id = state_id
-        self.name = name
-
-    def __str__(self):
-        """Return a string representation of the City instance."""
-        return f"City({self.state_id}, {self.name})"
+    def __init__(self, *args, **kwargs):
+        """Initialize City instance."""
+        super().__init__(*args, **kwargs)
+        self.state_id = ""
+        self.name = ""

@@ -17,6 +17,15 @@ from models.review import Review
 class TestReview_instantiation(unittest.TestCase):
     """Unittests for testing instantiation of the Review class."""
 
+    def test_no_args_instantiates(self):
+        self.assertEqual(Review, type(Review()))
+
+    def test_new_instance_stored_in_objects(self):
+        self.assertIn(Review(), models.storage.all().values())
+
+    def test_id_is_public_str(self):
+        self.assertEqual(str, type(Review().id))
+
     def test_created_at_is_public_datetime(self):
         self.assertEqual(datetime, type(Review().created_at))
 
@@ -29,20 +38,17 @@ class TestReview_instantiation(unittest.TestCase):
         self.assertIn("place_id", dir(rv))
         self.assertNotIn("place_id", rv.__dict__)
 
-    def test_no_args_instantiates(self):
-        self.assertEqual(Review, type(Review()))
-
-    def test_new_instance_stored_in_objects(self):
-        self.assertIn(Review(), models.storage.all().values())
-
-    def test_id_is_public_str(self):
-        self.assertEqual(str, type(Review().id))
-
     def test_user_id_is_public_class_attribute(self):
         rv = Review()
         self.assertEqual(str, type(Review.user_id))
         self.assertIn("user_id", dir(rv))
         self.assertNotIn("user_id", rv.__dict__)
+
+    def test_text_is_public_class_attribute(self):
+        rv = Review()
+        self.assertEqual(str, type(Review.text))
+        self.assertIn("text", dir(rv))
+        self.assertNotIn("text", rv.__dict__)
 
     def test_two_reviews_unique_ids(self):
         rv1 = Review()
@@ -61,12 +67,6 @@ class TestReview_instantiation(unittest.TestCase):
         rv2 = Review()
         self.assertLess(rv1.updated_at, rv2.updated_at)
 
-    def test_text_is_public_class_attribute(self):
-        rv = Review()
-        self.assertEqual(str, type(Review.text))
-        self.assertIn("text", dir(rv))
-        self.assertNotIn("text", rv.__dict__)
-
     def test_str_representation(self):
         dt = datetime.today()
         dt_repr = repr(dt)
@@ -79,6 +79,10 @@ class TestReview_instantiation(unittest.TestCase):
         self.assertIn("'created_at': " + dt_repr, rvstr)
         self.assertIn("'updated_at': " + dt_repr, rvstr)
 
+    def test_args_unused(self):
+        rv = Review(None)
+        self.assertNotIn(None, rv.__dict__.values())
+
     def test_instantiation_with_kwargs(self):
         dt = datetime.today()
         dt_iso = dt.isoformat()
@@ -86,12 +90,6 @@ class TestReview_instantiation(unittest.TestCase):
         self.assertEqual(rv.id, "345")
         self.assertEqual(rv.created_at, dt)
         self.assertEqual(rv.updated_at, dt)
-
-    def test_text_is_public_class_attribute(self):
-        rv = Review()
-        self.assertEqual(str, type(Review.text))
-        self.assertIn("text", dir(rv))
-        self.assertNotIn("text", rv.__dict__)
 
     def test_instantiation_with_None_kwargs(self):
         with self.assertRaises(TypeError):
